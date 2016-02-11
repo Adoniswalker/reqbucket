@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block title %}Home | {{ block.super }}{% endblock %}
+{% load main_tags %}
+{% block content %}
+    <div class="row">
+    <div class="col-md-6">
+        <p>Do you want a url a new Url?</p>
+        {% url_tag %}
+        <h2> Recent endpoints</h2>
+            <ul class="list-group">
+                {% for url_end in user.endpoints.all %}
+                    <li class="list-group-item list-group-item-info"><span class="badge">{{ url_end.date_insert }}</span>{{ url_end }}
+                        {% if url_end.url_name %}
+                        {{ url_end.url_name }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                
+            </ul>
+    </div>
+    <div class="col-md-6">
+        <p>section b</p>
+     {% if message %}
+            <h2>An error occured</h2>
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
