@@ -13,7 +13,7 @@ class EndPoint(models.Model):
         return str(short_url.encode_url(self.id))
 
     class Meta:
-        ordering = ['date_insert']
+        ordering = ['-date_insert']
 
 
 class RequestDeport(models.Model):
@@ -25,10 +25,14 @@ class RequestDeport(models.Model):
     http_user_agent = models.CharField(max_length=256, null=True)
     body = models.CharField(max_length=256, null=True)
     content_params = models.CharField(max_length=100, null=True)
-    COOKIES = models.CharField(max_length=100, null=True)
+    COOKIES = models.TextField(null=True)
     date_insert = models.DateTimeField(auto_now=True)
+
     # encoding = models.CharField(max_length=10)
     # meta_header = models.CharField(max_length=255, default='nothing')
 
     def __str__(self):
         return str(self.end_point)
+
+    class Meta:
+        ordering = ['-date_insert']

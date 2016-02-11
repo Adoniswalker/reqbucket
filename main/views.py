@@ -1,3 +1,5 @@
+import datetime
+
 import short_url
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
@@ -48,6 +50,9 @@ class CreateEndPoint(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.whos = self.request.user
+
+        # form.set_cookie('last_connection', datetime.datetime.now())
+        # form.set_cookie('username', datetime.datetime.now())
         return super().form_valid(form)
 
 
@@ -101,3 +106,5 @@ class MainView(View):
 
         rd.save()
         return JsonResponse({"results": 0, "result_error": "This is the error"})
+
+

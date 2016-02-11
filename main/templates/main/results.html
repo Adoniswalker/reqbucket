@@ -1,16 +1,45 @@
 {% extends "layout.html" %}
-
+{% load humanize %}
+{% load static %}
 {% block content %}
     <h2>Requests</h2>
-    <div class="list-group">
+    <div class="panel-group" id="accordion">
       {% for object in request_url %}
-              <a href="#" class="list-group-item">
-                <span class="badge">{{ object.date_insert }}</span>
-                    <h4 class="list-group-item-heading">{{ object.method }}</h4>
-                    <h5 class="list-group-item-heading">{{ object.content_type }}</h5>
-                    <p class="list-group-item-text">{{ object.body }}</p>
-                    <p class="list-group-item-dark">{{ object.meta_header }}</p>
-                </a>
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h4 class="panel-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}">
+                      <p class="text-primary">{{ object.method }}</p>
+                       {{ object.content_type }}
+                      <p class="pull-right text-info"><span class="glyphicon glyphicon-time"></span><small>{{ object.date_insert | naturaltime  }}</small></p>
+                  </a>
+              </h4>
+          </div>
+              <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse">
+                  <div class="panel-body">
+                      <p>clent user name    : {{  object.http_user_agent }}</p>
+                      <p>client ip address  : {{ object.remote_address }}</p>
+                      <p>content length     : {{ object.content_length }}</p>
+                      {% if object.body %}
+                      <div class="input-group">
+                      <textarea name="json" rows="10" cols="30" id="my_json" class="form-control" readonly>
+                          {{ object.body }}
+                      </textarea>
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" id="my_copy">
+                            <span class="glyphicon glyphicon-copy"></span>
+                          </button>
+                        </span>
+                      </div>
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+      {% empty %}
+          <div class="well"> You have not made any requests</div>
     {% endfor %}
     </div>
+    {% block javascript %}
+
+    {% endblock %}
 {% endblock %}

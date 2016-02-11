@@ -19,6 +19,12 @@ from django.views.generic import TemplateView
 from main import views as mainviews
 from accounts import views as account_views
 
+
+xhttps_urls = [
+    url(r'^url_data/(?P<end_id>\d+)', account_views.url_data, name='url_data'),
+    # url()
+]
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='main/index.html'), name='home'),
@@ -28,4 +34,5 @@ urlpatterns = [
     url(r'^jb/', include('main.urls')),
     url(r'^dashboard/', account_views.DashBoard.as_view(), name='dashboard'),
     url(r'^dash/(?P<end_point>\w+)/', account_views.DashboardFuc.as_view(), name='dashboardkey'),
+    url(r'^ajax_url/', include(xhttps_urls, namespace='ajax_url')),
 ]

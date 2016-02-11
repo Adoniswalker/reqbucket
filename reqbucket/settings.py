@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'main',
     'bootstrap3',
     'accounts',
+    'django.contrib.humanize',
 ]
 SITE_ID = 1
 
@@ -84,8 +85,13 @@ WSGI_APPLICATION = 'reqbucket.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'putsreq',
+        'USER': 'adoniswalker',
+        'PASSWORD': 'adonis254',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -140,7 +146,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET =False
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = LOGIN_URL
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL =None
 
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =3
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_EMAIL_REQUIRED =False
 ACCOUNT_EMAIL_VERIFICATION = None
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "Hi! there:"
