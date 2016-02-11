@@ -133,7 +133,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 ACCOUNT_AUTHENTICATION_METHOD = "username" or "email" or "username_email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET =False

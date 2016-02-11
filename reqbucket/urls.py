@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
 from main import views as mainviews
+from accounts import views as account_views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='main/index.html'), name='home'),
@@ -24,4 +26,5 @@ urlpatterns = [
     url(r'^about/', TemplateView.as_view(template_name='main/about.html'), name='about'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^jb/', include('main.urls')),
+    url(r'^dashboard/', account_views.DashBoard.as_view(), name='dashboard'),
 ]
