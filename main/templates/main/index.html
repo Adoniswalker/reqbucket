@@ -4,11 +4,6 @@
     <div class="row">
     <div class="col-md-6">
         <p>Do you want a url</p>
-
-        <form method="post" action="{% url 'get_end' %}">
-          {% csrf_token %}
-          <button type="submit">get it</button>
-        </form>
     </div>
     <div class="col-md-6">
         {% if title and message %}
