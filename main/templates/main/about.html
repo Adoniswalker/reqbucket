@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %}Home | {{ block.super }}{% endblock %}
+{% block content %}
+    <div class="row">
+    <div class="col-md-6">
+            <p>This is about page</p>
+    </div>
+    <div class="col-md-6">
+        {% if title and message %}
+            <h2>{{ title }}</h2>
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
