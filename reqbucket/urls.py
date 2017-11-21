@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^jb/', include('main.urls')),
     url(r'^dashboard/', account_views.DashBoard.as_view(), name='dashboard'),
+    url(r'^dash/(?P<end_point>\w+)/', account_views.DashboardFuc.as_view(), name='dashboardkey'),
 ]

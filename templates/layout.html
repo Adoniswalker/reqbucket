@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li {% if request.path == home %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
-        <li {% if request.path == results %}class="active"{% endif %}><a href="#">Results</a></li>
+        <li {% if request.path == results %}class="active"{% endif %}><a href="{% url 'dashboard' %}">Dashboard</a></li>
         <li {% if request.path == about %}class="active"{% endif %}><a href="{% url 'about' %}">About</a></li>
         <li {% if request.path == contact %}class="active"{% endif %}><a href="{% url 'contact' %}">Contact Us</a></li>
       </ul>

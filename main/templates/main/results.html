@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Requests</h2>
+    <div class="list-group">
+      {% for object in request_url %}
+              <a href="#" class="list-group-item">
+                <span class="badge">{{ object.date_insert }}</span>
+                    <h4 class="list-group-item-heading">{{ object.method }}</h4>
+                    <h5 class="list-group-item-heading">{{ object.content_type }}</h5>
+                    <p class="list-group-item-text">{{ object.body }}</p>
+                    <p class="list-group-item-dark">{{ object.meta_header }}</p>
+                </a>
+    {% endfor %}
+    </div>
+{% endblock %}
