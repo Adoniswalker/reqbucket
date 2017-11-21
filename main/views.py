@@ -55,38 +55,49 @@ class MainView(View):
     def get(self, request, end_point):
         int_id = short_url.decode_url(end_point)
         id__ = get_object_or_404(EndPoint, pk=int_id)
-        head = request.scheme  # remain
-        body = request.body  # go
-        path = str(request.path_info)  # remain
+        request_method = request.META['REQUEST_METHOD']
+        # content_length = request.META['CONTENT_LENGTH']
+        remote_address = request.META['REMOTE_ADDR']
+        http_user_agent = request.META['HTTP_USER_AGENT']
+        # body = str(request.body)  # remain
+        con_par = str(request.content_type)  # rmafd
         content_params = request.content_params  # go
-        con_par = request.content_type  # remain
-        encoding = request.encoding
+        if content_params:
+            content_params = str(request.content_params)
+        else:
+            content_params = None
         cookies = request.COOKIES
-        FILES = request.FILES
-        META = request.META
-        end = EndPoint.objects.get(pk=int_id)
-        rd = RequestDeport(end_point=end, content_type=con_par, body=body, content_params=content_params,
-                           encoding=str(encoding), COOKIES=str(cookies), meta_header=str(META))
-        # print(head,path,FILES)
+        if cookies:
+            cookies = str(cookies)
+        else:
+            cookies = None
+        # end = EndPoint.objects.get(pk=int_id)
+        rd = RequestDeport(end_point=id__, method=request_method, content_type=con_par, content_length=None,
+                           remote_address=remote_address,
+                           http_user_agent=http_user_agent, body=None, content_params=content_params,
+                           COOKIES=cookies)
+
         rd.save()
         return HttpResponse('ok')
 
     def post(self, request, end_point):
         int_id = short_url.decode_url(end_point)
         id__ = get_object_or_404(EndPoint, pk=int_id)
-        head = request.scheme  # remain
+        request_method = request.META['REQUEST_METHOD']
+        content_length = request.META['CONTENT_LENGTH']
+        remote_address = request.META['REMOTE_ADDR']
+        http_user_agent = request.META['HTTP_USER_AGENT']
         body = str(request.body)  # remain
-        path = str(request.path_info)  # remain
-        content_params = str(request.content_params)  # go
         con_par = str(request.content_type)  # rmafd
-        encoding = str(request.encoding)
-        cookies = str(request.COOKIES)
-        FILES = str(request.FILES)
-        META = request.META
-        # print(head,path,FILES)
-        end = EndPoint.objects.get(pk=int_id)
-        rd = RequestDeport(end_point=end, content_type=con_par, body=body, content_params=content_params,
-                           encoding=str(encoding), COOKIES=str(cookies), meta_header=str(META))
+        content_params = request.content_params  # go
+        if content_params: content_params = str(request.content_params)
+        else: content_params = None
+        cookies = request.COOKIES
+        if cookies: cookies = str(cookies)
+        else: cookies= None
+        # end = EndPoint.objects.get(pk=int_id)
+        rd = RequestDeport(end_point=id__, method=request_method, content_type=con_par,content_length = content_length, remote_address= remote_address,
+                           http_user_agent=http_user_agent, body=body, content_params=content_params, COOKIES=cookies)
 
         rd.save()
-        return JsonResponse({"resut": 0, "resulterro": "This is the error"})
+        return JsonResponse({"results": 0, "result_error": "This is the error"})
