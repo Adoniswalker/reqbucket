@@ -90,13 +90,12 @@ WSGI_APPLICATION = 'reqbucket.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'NAME': 'putsreq',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'adoniswalker$req_db',
         'USER': 'adoniswalker',
-        'PASSWORD': 'adonis254',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PASSWORD': 'Adonis254.',
+        'HOST': 'adoniswalker.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 
