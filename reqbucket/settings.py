@@ -25,7 +25,7 @@ SECRET_KEY = '-p)b^5d#*s2@1qi%9vg$3d00om)1h(etaoz*-@+%tv(a_=p8i0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.210', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.43.210', '127.0.0.1', 'adoniswalker.pythonanywhere.com']
 
 
 # Application definition
@@ -46,6 +46,11 @@ INSTALLED_APPS = [
     'bootstrap3',
     'accounts',
     'django.contrib.humanize',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.stackexchange',
+    'allauth.socialaccount.providers.github',
+
 ]
 SITE_ID = 1
 
