@@ -1,14 +1,45 @@
 {% extends 'layout.html' %}
 {% block title %}Home | {{ block.super }}{% endblock %}
+{% load account %}
+{% load socialaccount %}
+{#{% providers_media_js %}#}
 {% block content %}
     <div class="row">
-    <div class="col-md-6">
-        <p>Do you want a url</p>
-    </div>
-    <div class="col-md-6">
-        {% if title and message %}
-            <h2>{{ title }}</h2>
-            <p>{{ message }}</p>
-        {% endif %}
+        <h3 id="welcome"> "I want to record HTTP Requests, specify what should be returned and<br> check if my web
+            service is working online"</h3>
+        {#            <a href="{% provider_login_url "openid" openid="https://www.google.com/accounts/o8/id" next="/success/url/" %}">Google</a>#}
+        {#            <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>#}
+        {#            <a href="{% provider_login_url "openid" openid="https://www.google.com/accounts/o8/id#}
+        {#˓ → " next="/success/url/" %}">Google</a>#}
+        {#<a href="{% provider_login_url "twitter" %}">Twitter</a>#}
+        {#            {% load socialaccount %}#}
+        {#<a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook OAuth2</a>#}
+        <main role="main">
+            <div class="row marketing">
+                <div class="col-lg-6 mbox">
+                    <h4>Wire in Requests</h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+                    <h4>View requests</h4>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit
+                        amet fermentum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </div>
+
+                <div class="col-lg-6 mbox">
+                    <h4>Subheading</h4>
+                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit
+                        amet fermentum.</p>
+
+                    <h4>Subheading</h4>
+                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </div>
+            </div>
+        </main>
     </div>
 {% endblock %}
