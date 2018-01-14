@@ -25,9 +25,8 @@ SECRET_KEY = '-p)b^5d#*s2@1qi%9vg$3d00om)1h(etaoz*-@+%tv(a_=p8i0'
 DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.43.210', '127.0.0.1', 'adoniswalker.pythonanywhere.com']
-
-# Application definition
 # APPEND_SLASH = False
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     # for authentication
@@ -89,6 +88,10 @@ WSGI_APPLICATION = 'reqbucket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'req_db',
+        'USER': 'adoniswalker',
+        'PASSWORD': 'Adonis254.',
+        'HOST': 'adoniswalker.mysql.pythonanywhere-services.com',   # Or an IP Address that your DB is hosted on
         'NAME': 'adoniswalker$req_db',
         'USER': 'adoniswalker',
         'PASSWORD': 'Adonis254.',
