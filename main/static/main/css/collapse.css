@@ -1,0 +1,10 @@
+/*!* Icon when the collapsible content is shown *!*/
+/*.btn:after {*/
+    /*font-family: "Glyphicons Halflings";*/
+    /*content: "\e114";*/
+/*}*/
+
+/*!* Icon when the collapsible content is hidden *!*/
+/*.btn.collapsed:after {*/
+    /*content: "\e080";*/
+/*}*/
