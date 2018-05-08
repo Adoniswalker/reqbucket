@@ -2,15 +2,19 @@ import datetime
 
 import short_url
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from main.forms import ContactForm, RequestForm
 from main.models import EndPoint, RequestDeport
+from .serializers import EndpointSerializer, RequestDeportSerializer, UserSerializer
 
 
 def contact_view(request):
@@ -95,16 +99,45 @@ class MainView(View):
         body = str(request.body)  # remain
         con_par = str(request.content_type)  # rmafd
         content_params = request.content_params  # go
-        if content_params: content_params = str(request.content_params)
-        else: content_params = None
+        if content_params:
+            content_params = str(request.content_params)
+        else:
+            content_params = None
         cookies = request.COOKIES
-        if cookies: cookies = str(cookies)
-        else: cookies= None
+        if cookies:
+            cookies = str(cookies)
+        else:
+            cookies = None
         # end = EndPoint.objects.get(pk=int_id)
-        rd = RequestDeport(end_point=id__, method=request_method, content_type=con_par,content_length = content_length, remote_address= remote_address,
+        rd = RequestDeport(end_point=id__, method=request_method, content_type=con_par, content_length=content_length,
+                           remote_address=remote_address,
                            http_user_agent=http_user_agent, body=body, content_params=content_params, COOKIES=cookies)
 
         rd.save()
         return JsonResponse({"results": 0, "result_error": "This is the error"})
 
 
+# Api views
+class EndPointViewSet(viewsets.ModelViewSet):
+    serializer_class = EndpointSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(whos=self.request.user)
+
+    def get_queryset(self):
+        return self.request.user.endpoints.all()
+
+
+class RequestDeportViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = RequestDeport.objects.all()
+    serializer_class = RequestDeportSerializer
+
+    # def get_queryset(self):
+        # return self.request.user.endpoints.all()
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.filter(id=self.request.user.id)

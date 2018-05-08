@@ -2,7 +2,7 @@ body{
     background: rgba(114,11,208,0.2);
 }
 footer{
-    position: fixed;
+    /*position: fixed;*/
     left: 0;
     bottom: 0;
     width: 100%;

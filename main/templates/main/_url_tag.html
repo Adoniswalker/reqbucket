@@ -1,6 +1,4 @@
 {% load bootstrap3 %}
-<form method="post" action="{% url 'create_end' %}">
     {% bootstrap_form form %}
           {% csrf_token %}
-    <button type="submit" class="btn btn-default">Submit</button>
-</form>
+    <button type="submit" id="id_new_endpoint" class="btn btn-default">Submit</button>

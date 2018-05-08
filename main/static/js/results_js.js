@@ -1,47 +1,59 @@
-/**
- * Created by adonis on 11/25/17.
- */
-$("#my_copy").click(function () {
-    $("#my_json").select();
-    document.execCommand('copy');
-});
-function copy_to_clipboard(text_box_id) {
-    $(text_box_id).select();
-    document.execCommand('copy');
-}
-// var xhttp;
-// if (window.XMLHttpRequest){
-//     xhttp = new XMLHttpRequest();
-// }else {
-//     // code for IE6, IE5
-//     xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-// }
-// xhttp.open("GET", "ajax_info.txt", true);
-// xhttp.send();
-// $(document).ready(function(){
-//   $("#demo").on("hide.bs.collapse", function(){
-//     $(".btn").html('<span class="glyphicon glyphicon-collapse-down"></span> Open');
-//   });
-//   $("#demo").on("show.bs.collapse", function(){
-//     $(".btn").html('<span class="glyphicon glyphicon-collapse-up"></span> Close');
-//   });
-// });
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{your-app-id}',
-      cookie     : true,
-      xfbml      : true,
-      version    : '{latest-api-version}'
+$(function () {
+    var $endpoints = $('#endpoints');
+    var endpointTemplate = $('#endpoints-template').html();
+    var $url_name = $('#id_url_name');
+    var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+    // console.log($crf_token);
+    var $json_response = $('#id_json_response');
+
+
+    function add_end(endpoint) {
+        endpoint.end_count = endpoint.requests.length;
+        $endpoints.append(Mustache.render(endpointTemplate, endpoint));
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "/api/endpoint/",
+        success: function (endpoints) {
+            if (endpoints.next) {
+                // sets the next icon if there are more endpoints not loaded
+                $("#right_endpoint").attr("href", endpoints.next);
+            }
+            if (endpoints.previous) {
+                // sets the back url if person has moved backward
+                $('#left_endpoint').attr("href", endpoints.previous);
+            }
+
+            $.each(endpoints.results, function (i, result) {
+                // console.log("How many");
+                add_end(result);
+            });
+        },
+        error: function () {
+            alert("Not able to get end points");
+        }
+    });
+    $('#id_new_endpoint').on('click',function () {
+        var newEndpoint = {
+            url_name: $url_name.val(),
+            json_response: $json_response.val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "/api/endpoint/",
+            data: newEndpoint,
+            headers:{"X-CSRFToken": $crf_token},
+            success: function (newEnd) {
+                add_end(newEnd);
+            },
+            error: function () {
+                alert("There was an error")
+            }
+        });
+    });
+    $('.delete').on('click', 'span',function () {
+        alert("Delete clicked");
     });
 
-    FB.AppEvents.logPageView();
-
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+});

@@ -6,8 +6,12 @@ from .models import EndPoint, RequestDeport
 
 
 class EndpointAdmin(admin.ModelAdmin):
-    fields = ['url_name', 'whos', 'date_insert']
+    list_display = ('id', 'whos', 'url_name', 'date_insert', 'url_end')
 
 
-admin.site.register(RequestDeport)
+class RequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'end_point', 'method', 'content_type', 'remote_address')
+
+
+admin.site.register(RequestDeport, RequestAdmin)
 admin.site.register(EndPoint, EndpointAdmin)

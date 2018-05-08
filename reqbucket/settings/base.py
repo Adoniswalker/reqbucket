@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'rest_framework',
     'django.contrib.staticfiles',
     'main',
     'bootstrap3',
@@ -148,6 +149,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERSION': 'v2.5',
     }
 }
+REST_FRAMEWORK={
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoObjectPermissions',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'PAGE_SIZE': 5,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+}
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -167,6 +179,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/dashboard/'
+# APPEND_SLASH=True
 
 ACCOUNT_AUTHENTICATION_METHOD = "username" or "email" or "username_email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = False

@@ -1,8 +1,14 @@
-from django.conf.urls import url
-from . import views
-from django.views.decorators.csrf import csrf_exempt
+from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
+
+from main import views
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'requestdeport', views.RequestDeportViewSet)
+router.register(r'endpoint', views.EndPointViewSet, base_name='endpoint')
+router.register(r'users', views.UserViewSet, 'users')
 
 urlpatterns = [
-    url(r'^get_end/$',views.CreateEndPoint.as_view(), name = 'create_end' ),
-    url(r'^(?P<end_point>[a-zA-Z0-9_]+)/$', csrf_exempt(views.MainView.as_view()), name='major'),
+    url(r'^', include(router.urls))
 ]

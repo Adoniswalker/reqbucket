@@ -8,22 +8,21 @@
             <p>Do you want a url a new Url?</p>
             {% url_tag %}
             <h2> Recent endpoints</h2>
-            <ul class="list-group">
-                {% for url_end in user.endpoints.all %}
-                    <a href="#" class="list-group-item" onclick="Url_detail({{ url_end.id }})">
-                        <span class="badge">{{ url_end.pk|no_requests }}</span>
-
-                        <h4 class="list-group-item-heading">
-                            {% if url_end.url_name %}
-                                {{ url_end.url_name }}
-                            {% endif %}</h4>
-                        <p class="list-group-item-text">{{ url_end }}</p>
-                        <p class="list-group-item-text">{{ url_end.date_insert | naturaltime }}</p>
-                    </a>
-                {% empty %}
-                    <li>You have not generated any end points</li>
-                {% endfor %}
+            <ul class="list-group" id="endpoints">
             </ul>
+            <template id="endpoints-template">
+                <li class="list-group-item">
+                    {% verbatim %}
+                    <p><strong>Url name: </strong>{{ url_name }}</p>
+                    <p><strong>Json Response: </strong>{{ json_response }} </p>
+                    <button data-id="{{ id }}" class="delete"><span class="glyphicon glyphicon-trash"></span></button>
+                    <span class="badge">{{ end_count }}</span>
+                    {% endverbatim %}
+                </li>
+            </template>
+            <a href="#" id="left_endpoint" disabled="disabled"><span class="glyphicon glyphicon-menu-left"></span></a>
+            <a href="#" id="right_endpoint" disabled="disabled"> <span
+                    class="glyphicon glyphicon-menu-right"></span></a>
         </div>
         <div class="col-md-6">
             <h2>Request received</h2>
@@ -31,56 +30,7 @@
                 <p class="alert-danger">No endponit</p>
             </div>
         </div>
-        {#            #}
     </div>
 {% endblock %}
 {% block javascript %}
-    <script>
-        function Url_detail(url_end) {
-            {#    $("#div1").load('/ajax_url/url_data/'+url_end+'/');#}
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (xhttp.readyState === 4 && xhttp.status === 200) {
-                    var jsondata = JSON.parse(xhttp.responseText);
-                    document.getElementById("accordion").innerHTML = format_url_data(jsondata);
-                }
-            };
-            xhttp.open("GET", '/ajax_url/url_data/' + url_end + '/', true);
-            xhttp.send();
-        }
-        function format_url_data(jsondata) {
-            var html_data = '';
-            for (i = 0; i < jsondata.length; i++) {
-                var keep = jsondata[i].fields;
-                html_data += '<div class="panel panel-default">' +
-                    '<div class="panel-heading">' +
-                    '<h4 class="panel-title">' +
-                    '<a data-toggle="collapse" data-parent="#accordion" href="#collapse' + i + '">' + keep.content_type + '</a>' +
-                    '</h4>' +
-                    '</div>' +
-                    '<div id="collapse' + i + '" class="panel-collapse collapse">' +
-                    '<div class="panel-body">' +
-                    '</div>' +
-                    '<p>clent user name    :' + keep.http_user_agent + '</p>' +
-                    '<p>client ip address  :' + keep.remote_address + '</p>' +
-                    '<p>content length     :' + keep.content_length + '</p>' +
-                    '<div class="input-group">' +
-                    '<textarea name="json" rows="10" cols="30" id="textarea' + i + '" class="form-control" readonly>' +
-                    keep.body +
-                    '</textarea>' +
-                    '<span class="input-group-btn">' +
-                    '<button class="btn btn-default" type="button" onclick ="copy_to_clipboard(' + 'textarea' + i + '' + ')" id="button' + i + '">' +
-                    '<span class="glyphicon glyphicon-copy"></span>' +
-                    '</button>' +
-                    '</span>' +
-                    '</div>' +
-                    '</div>';
-            }
-            {#            console.log(html_data);#}
-            if (html_data)
-                return html_data;
-            else
-                return '<h4>No data yet</h4>'
-        }
-    </script>
 {% endblock %}

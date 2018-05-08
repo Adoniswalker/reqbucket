@@ -13,4 +13,4 @@ class ContactForm(forms.Form):
 class RequestForm(ModelForm):
     class Meta:
         model = models.EndPoint
-        fields = ['url_name']
+        fields = ['url_name', 'json_response']

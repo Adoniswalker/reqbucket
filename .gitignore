@@ -1,0 +1,10 @@
+.idea/
+accounts/__pycache__/
+accounts/migrations/
+db.sqlite3
+main/__pycache__/
+main/migrations/
+main/static/cdn/
+main/templatetags/__pycache__/
+reqbucket/__pycache__/
+reqbucket/settings/__pycache__/
